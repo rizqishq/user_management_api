@@ -17,7 +17,7 @@ export const getUsers = async (req, res) => {
         res.status(500).json({
             success: false,
             message: "Error fetching users",
-            error: err.message,
+            error: process.env.NODE_ENV === "development" ? err.message : undefined,
         });
     }
 };
@@ -44,7 +44,7 @@ export const getUserProfile = async (req, res) => {
         res.status(500).json({
             success: false,
             message: "Error fetching user profile",
-            error: err.message,
+            error: process.env.NODE_ENV === "development" ? err.message : undefined,
         });
     }
 };
@@ -122,7 +122,7 @@ export const updateProfile = async (req, res) => {
         res.status(500).json({
             success: false,
             message: "Error updating profile",
-            error: err.message,
+            error: process.env.NODE_ENV === "development" ? err.message : undefined,
         });
     }
 };
@@ -179,7 +179,7 @@ export const uploadAvatar = async (req, res) => {
         res.status(500).json({
             success: false,
             message: "Error uploading avatar",
-            error: err.message,
+            error: process.env.NODE_ENV === "development" ? err.message : undefined,
         });
     }
 };
@@ -219,7 +219,7 @@ export const deleteUser = async (req, res) => {
         res.status(500).json({
             success: false,
             message: "Error deleting user",
-            error: err.message,
+            error: process.env.NODE_ENV === "development" ? err.message : undefined,
         });
     }
 };

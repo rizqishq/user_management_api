@@ -6,6 +6,8 @@ import authRoutes from "./src/routes/authRoutes.js";
 import userRoutes from "./src/routes/userRoutes.js";
 import { connectDB } from "./src/config/db.js";
 import { pool } from "./src/config/db.js";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./src/docs/swagger.js";
 
 dotenv.config();
 
@@ -27,6 +29,13 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+
+// Swagger docs
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.get("/api/docs.json", (req, res) => {
+    res.setHeader("Content-Type", "application/json");
+    res.send(swaggerSpec);
+});
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {

@@ -79,7 +79,7 @@ export const register = async (req, res) => {
         res.status(500).json({
             success: false,
             message: "Error registering user",
-            error: err.message,
+            error: process.env.NODE_ENV === "development" ? err.message : undefined,
         });
     }
 };
@@ -111,6 +111,13 @@ export const login = async (req, res) => {
             });
         }
 
+        if (!process.env.JWT_SECRET) {
+            return res.status(500).json({
+                success: false,
+                message: "Server configuration error"
+            });
+        }
+
         const token = jwt.sign(
             { id: user.id, email: user.email, role: user.role },
             process.env.JWT_SECRET,
@@ -133,7 +140,7 @@ export const login = async (req, res) => {
         res.status(500).json({
             success: false,
             message: "Login failed",
-            error: err.message,
+            error: process.env.NODE_ENV === "development" ? err.message : undefined,
         });
     }
 };
